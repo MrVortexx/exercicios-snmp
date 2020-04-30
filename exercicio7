@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# 7 - Fazer um script que calcule para sua interface de rede, uma média dos bits e pacotes transmitidos por segundo.
+
+##pegando a informação 
+firstInput=`snmpget -v 2c -Ov -c public 127.0.0.1 ifInOctets.1`
+
+##formanto a informação recebida pra ficarmos somente com os valores numericos
+inOctets=${firstInput/Counter32:/}
+
+##tranformando os octetos em bits
+inBit=$((inOctets*8))
+
+echo " input inicial em bits: $inBit "
+ 
+
+firstOutput=`snmpget -v 2c -Ov -c public 127.0.0.1 ifOutOctets.1`
+outOctets=${firstOutput/Counter32:/}
+outBit=$((outOctets*8))
+
+echo " output inicial em bits $outBit"
+
+sleep 10
+
+secondInput=`snmpget -v 2c -Ov -c public 127.0.0.1 ifInOctets.1`
+inOctets2=${secondInput/Counter32:/}
+inBit2=$((inOctets2 * 8 ))
+
+echo " input final $inBit2"
+
+secondOutput=`snmpget -v 2c -Ov -c public 127.0.0.1 ifOutOctets.1`
+outOctets2=${secondOutput/Counter32:/}
+outBit2=$((outOctets2 * 8))
+
+echo " output final $outBit2"
+
+#calculando o total em bits por segundo
+totalIn=$((( inBit2 - inBit )/10 ))  
+totalOut=$((( outBit2 - outBit )/10))
+ 
+ echo "media de dados recebidos por segundo: $totalIn \n  media  de dados entregados por segundo: $totalOut"
+ 
+

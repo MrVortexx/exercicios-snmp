@@ -1,0 +1,33 @@
+#!/bin/bash
+#Fazer um script que colete os bytes recebidos e transmitidos de duas interfaces (ether2-telco e ether4-mundivox) do Gateway #(10.0.0.1) por 10 minutos.
+#Salve os valores e plote um gráfico.
+
+#IF-MIB::ifDescr.4 = STRING: ether3-telco
+#IF-MIB::ifDescr.3 = STRING: ether2-mundivox-dyn
+
+        echo "Script rodando em busca de informações de ether3-telco e ether2-mundivox"
+#pegando o tempo atual em segundos
+start=$(date +%s) 
+
+#determinando que o tempo final será 10 minutos(600segundos a mais) após o tempo final
+end=$(( $start + 600))
+
+#determinando que o programa executará enquanto não se passar os 10 minutos
+while [ $(date +%s) -lt $end ]; do
+        
+        ##pegando a informação do ether3-telco e ja enviando para o arquivo correspondente para montar o grafico posteriormente
+ 
+        snmpget -v 2c -O v -c erlang2  10.0.0.1 ifOutOctets.4 >> Out-Telco.txt
+        snmpget -v 2c -O v -c erlang2  10.0.0.1 ifInOctets.4 >> Inp-Telco.txt
+        
+        echo "informacoes enviadas para os arquivos Out-Telco.txt e Inp-Telco.txt"
+        
+       ##pegando a informação do mundivox e ja enviando para o arquivo correspondente para montar o grafico posteriormente
+        snmpget -v 2c -O v -c erlang2  10.0.0.1 ifOutOctets.3 >> Out-Mundi.txt
+        snmpget -v 2c -O v -c erlang2  10.0.0.1 ifInOctets.3 >> Inp-Mundi.txt
+        
+        echo "informacoes enviadas para os arquivos Out-Mundi.txt e Inp-Mundi.txt"
+        #vamos adicionar um intervalo de 30 segundos para chamarmos a função novamente
+       sleep 30
+    done
+

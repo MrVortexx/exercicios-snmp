@@ -1,0 +1,25 @@
+1-Habilitar serviço SNMP em sua estação de trabalho;
+
+2- Solicitar ao responsável pelo treinamento, um TRAFip que possa ser utilizado no treinamento.
+
+3-Efetuar um SNMP Walk para o TRAFip solicitado salvando a resposta em um arquivo.
+  R:  snmpwalk -v 2c -c erlang2 10.0.0.1 > teste1.txt
+  
+4-Qual OID retorna uma descrição das interfaces do dispositivo?
+
+snmpwalk -v 2c -c erlang2 10.0.0.1 sysDescr
+
+5-Qual OID da MIB HOST-RESOURCES retorna o número de processos que estão sendo executados no sistema?
+    hrSystemProcesses
+    
+6- Efetuar SSH para o TRAFip solicitado.
+    Login: admin
+    Pass: telcoadm
+    Dessa máquina efetuar um snmpwalk para a sua estação de trabalho.
+R:
+1º- ssh admin@10.0.0.128
+2° -TelcoAppliance> snmp walk 127.0.0.1 public 2c MIB     
+
+
+
+
