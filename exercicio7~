@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # 7 - Fazer um script que calcule para sua interface de rede, uma média dos bits e pacotes transmitidos por segundo.
-#Dica: Faça duas coletas dos bytes/pacotes transmitidos com um intervalo de tempo de 10 segundos.
 
 ##pegando a informação 
 firstInput=`snmpget -v 2c -Ov -c public 127.0.0.1 ifInOctets.1`
